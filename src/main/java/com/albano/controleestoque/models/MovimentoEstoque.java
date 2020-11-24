@@ -1,27 +1,55 @@
-package com.albano.controleestoque.dtos;
+package com.albano.controleestoque.models;
+
+import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.CascadeType.MERGE;
 
 import com.albano.controleestoque.enums.TipoMovimentoEstoque;
-import com.albano.controleestoque.models.MovimentoEstoque;
 
-import java.io.Serializable;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class MovimentoEstoqueDTO implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Entity
+@Table(name = "movimento_estoque")
+public class MovimentoEstoque {
 
-    private Integer produto;
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
+    @ManyToOne(cascade = MERGE)
+    @JoinColumn(name = "produto_id", nullable = false)
+    private Produto produto;
+
+    @Enumerated(STRING)
+    @Column(name = "tipo", nullable = false)
     private TipoMovimentoEstoque tipo;
+
+    @Column(name = "valor_venda")
     private BigDecimal valorVenda;
+
+    @Column(name = "data_venda")
     private LocalDate dataVenda;
+
+    @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
 
-    public Integer getProduto() {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Produto getProduto() {
         return produto;
     }
 
-    public void setProduto(Integer produto) {
+    public void setProduto(Produto produto) {
         this.produto = produto;
     }
 
@@ -61,8 +89,9 @@ public class MovimentoEstoqueDTO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MovimentoEstoqueDTO that = (MovimentoEstoqueDTO) o;
-        return Objects.equals(produto, that.produto) &&
+        MovimentoEstoque that = (MovimentoEstoque) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(produto, that.produto) &&
                 tipo == that.tipo &&
                 Objects.equals(valorVenda, that.valorVenda) &&
                 Objects.equals(dataVenda, that.dataVenda) &&
@@ -71,26 +100,6 @@ public class MovimentoEstoqueDTO implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(produto, tipo, valorVenda, dataVenda, quantidade);
-    }
-
-    public static MovimentoEstoqueDTO from(MovimentoEstoque movimentoEstoque) {
-        MovimentoEstoqueDTO dto = new MovimentoEstoqueDTO();
-        dto.setDataVenda(movimentoEstoque.getDataVenda());
-        dto.setProduto(movimentoEstoque.getProduto().getId());
-        dto.setQuantidade(movimentoEstoque.getQuantidade());
-        dto.setValorVenda(movimentoEstoque.getValorVenda());
-        dto.setTipo(movimentoEstoque.getTipo());
-        return dto;
-    }
-
-    public MovimentoEstoque toMovimentoEstoque() {
-        MovimentoEstoque movimentoEstoque = new MovimentoEstoque();
-        movimentoEstoque.setDataVenda(dataVenda);
-        movimentoEstoque.setQuantidade(quantidade);
-        movimentoEstoque.setValorVenda(valorVenda);
-        movimentoEstoque.setTipo(tipo);
-        //adicionar o produto apos chamar esse metodo
-        return movimentoEstoque;
+        return Objects.hash(id, produto, tipo, valorVenda, dataVenda, quantidade);
     }
 }

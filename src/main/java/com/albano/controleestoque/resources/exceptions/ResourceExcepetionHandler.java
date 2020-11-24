@@ -5,6 +5,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 import com.albano.controleestoque.services.excepetions.ProdutoIntegridadeException;
 import com.albano.controleestoque.services.excepetions.ProdutoNaoEncontradoException;
+import com.albano.controleestoque.services.excepetions.ProdutoSemEstoqueException;
+import io.swagger.models.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -22,6 +24,11 @@ public class ResourceExcepetionHandler {
 
     @ExceptionHandler(ProdutoIntegridadeException.class)
     public ResponseEntity<StandardError> integridadeProduto(ProdutoIntegridadeException e, HttpServletRequest request) {
+        return construirRespostaErro(e, request, BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ProdutoSemEstoqueException.class)
+    public ResponseEntity<StandardError> produtoSemEstoque(ProdutoSemEstoqueException e, HttpServletRequest request) {
         return construirRespostaErro(e, request, BAD_REQUEST);
     }
 

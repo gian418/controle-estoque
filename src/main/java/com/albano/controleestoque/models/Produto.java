@@ -1,6 +1,7 @@
 package com.albano.controleestoque.models;
 
 import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.EnumType.STRING;
 
 import com.albano.controleestoque.enums.TipoProduto;
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Produto {
     @Column(name = "descricao", nullable = false)
     private String descricao;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(STRING)
     @Column(name = "tipo", nullable = false)
     private TipoProduto tipo;
 
