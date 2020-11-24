@@ -32,7 +32,7 @@ public class ProdutoResource {
     @Autowired
     private ProdutoService produtoService;
 
-    @ApiOperation("Consulta um produto")
+    @ApiOperation("Consultar um produto")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Retorna informacoes de um produto"),
             @ApiResponse(code = 400, message = "Problema com algum atributo passado"),
@@ -79,7 +79,7 @@ public class ProdutoResource {
             @ApiResponse(code = 400, message = "Problema com algum atributo passado"),
             @ApiResponse(code = 500, message = "Ocorreu algum erro nos servidor"),
     })
-    @RequestMapping(method = PUT)
+    @RequestMapping(value = "/{idProduto}", method = PUT)
     public ResponseEntity atualizar(@PathVariable Integer idProduto, @RequestBody AtualizarProdutoDTO dto) {
         produtoService.atualizar(idProduto, dto);
         return ResponseEntity.noContent().build();

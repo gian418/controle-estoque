@@ -5,7 +5,10 @@ import com.albano.controleestoque.dtos.NovoProdutoDTO;
 import com.albano.controleestoque.dtos.ProdutoDTO;
 import com.albano.controleestoque.models.Produto;
 import com.albano.controleestoque.repositories.ProdutoRepository;
+import com.albano.controleestoque.services.excepetions.ProdutoIntegridadeException;
+import com.albano.controleestoque.services.excepetions.ProdutoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,33 +29,31 @@ public class ProdutoService {
 
     public Produto consultarPorId(Integer idProduto) {
         Optional<Produto> produto = produtoRepository.findById(idProduto);
-        return produto.orElseThrow(); //TODO criar erro personalizado
+        return produto.orElseThrow(
+                () -> new ProdutoNaoEncontradoException("Produto não encontrado pela id " + idProduto)
+        );
     }
 
     public void deletar(Integer idProduto) {
         consultarPorId(idProduto);
-
         try {
             produtoRepository.deleteById(idProduto);
-        } catch (Exception e) {
-            //TODO criar um erro personalizado, nao deixar deletar se tem movimento de estoque
+        } catch (DataIntegrityViolationException e) {
+            throw new ProdutoIntegridadeException("Não é possuivel deletar este produto, pois possui relação com outros registros");
         }
-
     }
 
     public Produto atualizar(Integer idProduto, AtualizarProdutoDTO dto) {
-        Produto produdo = consultarPorId(idProduto);
-        produdo.setValorFornecedor(dto.getValorFornecedor());
-        produdo.setTipo(dto.getTipo());
-        produdo.setDescricao(dto.getDescricao());
-        return produtoRepository.save(produdo);
+        Produto produto = consultarPorId(idProduto);
+        produto.setValorFornecedor(dto.getValorFornecedor());
+        produto.setTipo(dto.getTipo());
+        produto.setDescricao(dto.getDescricao());
+        return produtoRepository.save(produto);
     }
 
     public List<ProdutoDTO> buscarTodos() {
         List<Produto> produtos = (List<Produto>) produtoRepository.findAll();
-
         if(produtos.isEmpty()) return new ArrayList<>();
-
         return produtos.stream().map(produto -> ProdutoDTO.from(produto)).collect(Collectors.toList());
     }
 }
