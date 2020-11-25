@@ -14,6 +14,9 @@ Está sendo utilizado o Swagger para documentar esta API. Para acessar, basta ab
 http://localhost:8080/swagger-ui.html
 ```
 
+#### Banco de dados
+Está sendo utilizado o banco H2 em memória. Toda vez ao desligar a aplicação, o banco é zerado.
+
 #### Utilizando a API
 Endpoints relacionados ao CRUD do produto
 
