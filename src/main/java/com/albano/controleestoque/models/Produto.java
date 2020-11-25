@@ -3,9 +3,12 @@ package com.albano.controleestoque.models;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.EnumType.STRING;
 
+import com.albano.controleestoque.enums.TipoMovimentoEstoque;
 import com.albano.controleestoque.enums.TipoProduto;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -29,6 +32,9 @@ public class Produto {
 
     @Column(name = "quantidade_estoque")
     private Integer quantidadeEstoque;
+
+    @OneToMany(mappedBy = "produto")
+    private List<MovimentoEstoque> movimentos = new ArrayList<>();
 
     public Integer getId() {
         return id;
@@ -68,6 +74,19 @@ public class Produto {
 
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
+    }
+
+    public List<MovimentoEstoque> getMovimentos() {
+        return movimentos;
+    }
+
+    public Integer getQuantidadeSaida() {
+        if(movimentos.isEmpty()) return 0;
+
+        return movimentos.stream()
+                .filter(movimento -> movimento.getTipo().equals(TipoMovimentoEstoque.SAIDA))
+                .mapToInt(MovimentoEstoque::getQuantidade)
+                .sum();
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.albano.controleestoque.services;
 
 import static com.albano.controleestoque.enums.TipoMovimentoEstoque.ENTRADA;
-import static com.albano.controleestoque.enums.TipoMovimentoEstoque.SAIDA;
 
 import com.albano.controleestoque.dtos.MovimentoEstoqueDTO;
 import com.albano.controleestoque.models.MovimentoEstoque;
@@ -21,7 +20,7 @@ public class MovimentoEstoqueService {
     private ProdutoService produtoService;
 
     public MovimentoEstoque salvar(MovimentoEstoqueDTO dto) {
-        Produto produto = produtoService.consultarPorId(dto.getProduto());
+        Produto produto = produtoService.buscarPorId(dto.getProduto());
         MovimentoEstoque movimentoEstoque = dto.toMovimentoEstoque();
         return movimentarEstoque(movimentoEstoque, produto);
     }

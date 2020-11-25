@@ -40,7 +40,7 @@ public class ProdutoResource {
     })
     @RequestMapping(value = "/{idProduto}", method = GET)
     public ResponseEntity consultar(@PathVariable Integer idProduto) {
-        Produto produto = produtoService.consultarPorId(idProduto);
+        Produto produto = produtoService.buscarPorId(idProduto);
         return ResponseEntity.ok().body(ProdutoDTO.from(produto));
     }
 
@@ -80,7 +80,7 @@ public class ProdutoResource {
             @ApiResponse(code = 500, message = "Ocorreu algum erro nos servidor"),
     })
     @RequestMapping(value = "/{idProduto}", method = PUT)
-    public ResponseEntity atualizar(@PathVariable Integer idProduto, @RequestBody AtualizarProdutoDTO dto) {
+    public ResponseEntity atualizar(@PathVariable Integer idProduto, @RequestBody @Valid AtualizarProdutoDTO dto) {
         produtoService.atualizar(idProduto, dto);
         return ResponseEntity.noContent().build();
     }

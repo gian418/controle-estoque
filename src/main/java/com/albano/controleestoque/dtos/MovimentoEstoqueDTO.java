@@ -3,6 +3,7 @@ package com.albano.controleestoque.dtos;
 import com.albano.controleestoque.enums.TipoMovimentoEstoque;
 import com.albano.controleestoque.models.MovimentoEstoque;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,10 +12,18 @@ import java.util.Objects;
 public class MovimentoEstoqueDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "Preenchimento obrigatorio")
     private Integer produto;
+
+    @NotNull(message = "Preenchimento obrigaotorio")
     private TipoMovimentoEstoque tipo;
+
+    @NotNull(message = "Preenchimento obrigatorio")
     private BigDecimal valorVenda;
+
     private LocalDate dataVenda;
+
+    @NotNull(message = "Preenchimento obrigatorio")
     private Integer quantidade;
 
     public Integer getProduto() {

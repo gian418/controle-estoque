@@ -15,6 +15,7 @@ public class ProdutoDTO implements Serializable {
     private TipoProduto tipo;
     private BigDecimal valorFornecedor;
     private Integer quantidadeEstoque;
+    private Integer quantidadeSaida;
 
     public Integer getId() {
         return id;
@@ -56,6 +57,14 @@ public class ProdutoDTO implements Serializable {
         this.quantidadeEstoque = quantidadeEstoque;
     }
 
+    public Integer getQuantidadeSaida() {
+        return quantidadeSaida;
+    }
+
+    public void setQuantidadeSaida(Integer quantidadeSaida) {
+        this.quantidadeSaida = quantidadeSaida;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,6 +89,7 @@ public class ProdutoDTO implements Serializable {
         dto.setQuantidadeEstoque(produto.getQuantidadeEstoque());
         dto.setTipo(produto.getTipo());
         dto.setValorFornecedor(produto.getValorFornecedor());
+        dto.setQuantidadeSaida(produto.getQuantidadeSaida());
         return dto;
     }
 

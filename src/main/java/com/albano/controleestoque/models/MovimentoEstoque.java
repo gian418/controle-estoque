@@ -28,7 +28,7 @@ public class MovimentoEstoque {
     @Column(name = "tipo", nullable = false)
     private TipoMovimentoEstoque tipo;
 
-    @Column(name = "valor_venda")
+    @Column(name = "valor_venda", nullable = false)
     private BigDecimal valorVenda;
 
     @Column(name = "data_venda")

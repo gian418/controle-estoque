@@ -3,6 +3,7 @@ package com.albano.controleestoque.services;
 import com.albano.controleestoque.dtos.AtualizarProdutoDTO;
 import com.albano.controleestoque.dtos.NovoProdutoDTO;
 import com.albano.controleestoque.dtos.ProdutoDTO;
+import com.albano.controleestoque.enums.TipoProduto;
 import com.albano.controleestoque.models.Produto;
 import com.albano.controleestoque.repositories.ProdutoRepository;
 import com.albano.controleestoque.services.excepetions.ProdutoIntegridadeException;
@@ -27,7 +28,7 @@ public class ProdutoService {
         return produtoRepository.save(novoProduto);
     }
 
-    public Produto consultarPorId(Integer idProduto) {
+    public Produto buscarPorId(Integer idProduto) {
         Optional<Produto> produto = produtoRepository.findById(idProduto);
         return produto.orElseThrow(
                 () -> new ProdutoNaoEncontradoException("Produto não encontrado pela id " + idProduto)
@@ -35,7 +36,7 @@ public class ProdutoService {
     }
 
     public void deletar(Integer idProduto) {
-        consultarPorId(idProduto);
+        buscarPorId(idProduto);
         try {
             produtoRepository.deleteById(idProduto);
         } catch (DataIntegrityViolationException e) {
@@ -44,7 +45,7 @@ public class ProdutoService {
     }
 
     public Produto atualizar(Integer idProduto, AtualizarProdutoDTO dto) {
-        Produto produto = consultarPorId(idProduto);
+        Produto produto = buscarPorId(idProduto);
         produto.setValorFornecedor(dto.getValorFornecedor());
         produto.setTipo(dto.getTipo());
         produto.setDescricao(dto.getDescricao());
@@ -55,5 +56,9 @@ public class ProdutoService {
         List<Produto> produtos = (List<Produto>) produtoRepository.findAll();
         if(produtos.isEmpty()) return new ArrayList<>();
         return produtos.stream().map(produto -> ProdutoDTO.from(produto)).collect(Collectors.toList());
+    }
+
+    public List<Produto> buscarProdutosPorTipo(TipoProduto tipo) {
+        return produtoRepository.findAllByTipo(tipo);
     }
 }
