@@ -3,9 +3,9 @@ package com.albano.controleestoque.resources.exceptions;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
-import com.albano.controleestoque.services.excepetions.ProdutoIntegridadeException;
-import com.albano.controleestoque.services.excepetions.ProdutoNaoEncontradoException;
-import com.albano.controleestoque.services.excepetions.ProdutoSemEstoqueException;
+import com.albano.controleestoque.services.exceptions.ProdutoIntegridadeException;
+import com.albano.controleestoque.services.exceptions.ProdutoNaoEncontradoException;
+import com.albano.controleestoque.services.exceptions.ProdutoSemEstoqueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

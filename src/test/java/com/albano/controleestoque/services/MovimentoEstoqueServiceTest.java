@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.albano.controleestoque.dtos.MovimentoEstoqueDTO;
 import com.albano.controleestoque.enums.TipoMovimentoEstoque;
 import com.albano.controleestoque.models.MovimentoEstoque;
-import com.albano.controleestoque.services.excepetions.ProdutoSemEstoqueException;
+import com.albano.controleestoque.services.exceptions.ProdutoSemEstoqueException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

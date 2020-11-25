@@ -6,7 +6,7 @@ import com.albano.controleestoque.dtos.MovimentoEstoqueDTO;
 import com.albano.controleestoque.models.MovimentoEstoque;
 import com.albano.controleestoque.models.Produto;
 import com.albano.controleestoque.repositories.MovimentoEstoqueRepository;
-import com.albano.controleestoque.services.excepetions.ProdutoSemEstoqueException;
+import com.albano.controleestoque.services.exceptions.ProdutoSemEstoqueException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -7,7 +7,7 @@ import com.albano.controleestoque.dtos.AtualizarProdutoDTO;
 import com.albano.controleestoque.dtos.NovoProdutoDTO;
 import com.albano.controleestoque.enums.TipoProduto;
 import com.albano.controleestoque.models.Produto;
-import com.albano.controleestoque.services.excepetions.ProdutoNaoEncontradoException;
+import com.albano.controleestoque.services.exceptions.ProdutoNaoEncontradoException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
